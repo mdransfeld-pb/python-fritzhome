@@ -313,3 +313,18 @@ class Fritzhome(object):
             "duration": int(duration)*10
         }
         self._aha_request("setcolortemperature", ain=ain, param=params)
+
+    
+    # Blind-related commands
+
+    def set_blind_open(self, ain):
+        """Set the blind to open state."""
+        self._aha_request("setblind", ain=ain, param={'target': 'open'})
+
+    def set_blind_close(self, ain):
+        """"Set the blind to close state."""
+        self._aha_request("setblind", ain=ain, param={'target': 'close'})
+
+    def set_blind_stop(self, ain):
+        """Set the blind to stop state."""
+        self._aha_request("setblind", ain=ain, param={'target': 'stop'})
