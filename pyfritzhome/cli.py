@@ -65,6 +65,11 @@ def list_all(fritz, args):
             print("  level=%s" % device.level)
             print("  hue=%s" % device.hue)
             print("  saturation=%s" % device.saturation)
+        if device.has_blind:
+            print(" Blind:")
+            print("  alert=%s" % device.alert_state)
+            print("  level=%s" % device.level)
+            print("  level_percentage=%s" % device.level_percentage)
 
 
 def device_name(fritz, args):
@@ -101,6 +106,18 @@ def switch_off(fritz, args):
 def switch_toggle(fritz, args):
     """Command that toggles the device switch state."""
     fritz.set_switch_state_toggle(args.ain)
+
+def blind_open(fritz, args):
+    """Command that set the device blind state to open."""
+    fritz.set_blind_open(args.ain)
+
+def blind_close(fritz, args):
+    """Command that set the device blind state to close."""
+    fritz.set_blind_close(args.ain)
+
+def blind_stop(fritz, args):
+    """Command that set the device blind state to stop."""
+    fritz.set_blind_stop(args.ain)
 
 
 def main(args=None):
@@ -183,6 +200,21 @@ def main(args=None):
     subparser = _sub_switch.add_parser("toggle", help="set off state")
     subparser.add_argument("ain", type=str, metavar="AIN", help="Actor Identification")
     subparser.set_defaults(func=switch_toggle)
+
+    # blind open
+    subparser = _sub_switch.add_parser("open", help="set open state")
+    subparser.add_argument("ain", type=str, metavar="AIN", help="Actor Identification")
+    subparser.set_defaults(func=blind_open)
+
+    # blind close
+    subparser = _sub_switch.add_parser("close", help="set close state")
+    subparser.add_argument("ain", type=str, metavar="AIN", help="Actor Identification")
+    subparser.set_defaults(func=blind_close)
+
+    # blind stop
+    subparser = _sub_switch.add_parser("stop", help="set stop state")
+    subparser.add_argument("ain", type=str, metavar="AIN", help="Actor Identification")
+    subparser.set_defaults(func=blind_stop)
 
     args = parser.parse_args(args)
 
